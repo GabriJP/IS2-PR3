@@ -2,7 +2,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 
@@ -27,7 +26,7 @@ public class HistogramDisplay extends ApplicationFrame{
     }
 
     private JFreeChart createChart(DefaultCategoryDataset dataset){
-        return ChartFactory.createBarChart("Histogram", "Domains", "Email quantity", dataset, PlotOrientation.VERTICAL, false, false, false);
+        return ChartFactory.createBarChart("Histogram", "Domains", "Email quantity", dataset, PlotOrientation.VERTICAL, false, true, true);
     }
 
     private DefaultCategoryDataset createDataSet(){
