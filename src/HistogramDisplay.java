@@ -1,7 +1,6 @@
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 
@@ -11,34 +10,32 @@ import java.awt.*;
 /**
  * Created by Gabriel on 20/10/2015.
  */
-public class HistogramDisplay extends ApplicationFrame{
+public class HistogramDisplay extends ApplicationFrame {
+
+    private Histogram<String> histogram = new Histogram<>();
 
     public HistogramDisplay() {
-        super("HISTOGRAM");
+        super("Histogram");
+        histogram = new HistogramReader().readFromFile("./domains.txt");
         setContentPane(createPanel());
         pack();
     }
 
     private JPanel createPanel() {
-        ChartPanel chartPanel = new ChartPanel(createChart(createDataSet()));
-        chartPanel.setPreferredSize(new Dimension(500, 500));
+        ChartPanel chartPanel = new ChartPanel(createChart(createDataset()));
+        chartPanel.setPreferredSize(new Dimension(700,700));
         return chartPanel;
     }
 
     private JFreeChart createChart(DefaultCategoryDataset dataset){
-        return ChartFactory.createBarChart("Histogram", "Domains", "Email quantity", dataset, PlotOrientation.VERTICAL, false, true, true);
+        return ChartFactory.createBarChart("Histogram", "Domain", "Number of accounts", dataset);
     }
 
-    private DefaultCategoryDataset createDataSet(){
-        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-        dataSet.addValue(10, "", "gmail.com");
-        dataSet.addValue(25, "", "hotmail.com");
-        dataSet.addValue(15, "", "ull.es");
-        dataSet.addValue(30, "", "ulpgc.es");
-        return dataSet;
-    }
-
-    public void execute() {
-        setVisible(true);
+    private DefaultCategoryDataset createDataset(){
+        DefaultCategoryDataset defaultCategoryDataset = new DefaultCategoryDataset();
+        for(String key : histogram.keySet()){
+            defaultCategoryDataset.addValue(histogram.get(key), "", key);
+        }
+        return defaultCategoryDataset;
     }
 }
